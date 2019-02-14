@@ -8,7 +8,7 @@ from PIL import Image
 
 # code.interact(local=dict(globals(), **locals()))
 
-image_name = 'sample_pics/burr_cell_6.png'
+image_name = 'sample_pics/test_6.png'
 im = cv2.imread(image_name)
 im_gray = cv2.imread(image_name, cv2.IMREAD_GRAYSCALE)
 
@@ -32,8 +32,9 @@ def segment_image(image):
                     down = vertical_boundary[1]
                     left = horizontal_boundary[0]
                     right = horizontal_boundary[1]
+                    # code.interact(local=dict(globals(), **locals()))
                     boundaries.append([up,down,left,right])
-    image_counter = 704
+    image_counter = 0
     for b in boundaries[1:len(boundaries)-1]:
         image_counter += 1
         cell_pic = im[b[0]:b[1] , b[2]:b[3]]
@@ -43,9 +44,9 @@ def segment_image(image):
             ratio = diff_y / float(diff_x)
         except:
             continue
-        if ratio > 1.2 or ratio < 0.8:
-            continue
-        image_name = "burr_cells/img_{}.png".format(image_counter)
+        # if ratio > 1.2 or ratio < 0.8:
+        #     continue
+        image_name = "Demo_segmentation/img_{}.png".format(image_counter)
         try:
             pic = Image.fromarray(cell_pic)
             pic.save(image_name)
@@ -93,8 +94,10 @@ def get_horizontal_boundaries(image,row, column):
                 flag = 2
             else:
                 break
+            # image[j_right][i_right] == 220
         except:
             break
+
 
     flag = 0
     # getting column boundaries (left side)
@@ -115,8 +118,8 @@ def get_horizontal_boundaries(image,row, column):
                 break
         except:
             break
-    #     image_test_2[j_left][i_left] = 200
-    # plt.imshow(image_test_2)
+
+    # plt.imshow(image)
     # plt.show()
     return [horizontal_boundary_left, horizontal_boundary_right]
 
